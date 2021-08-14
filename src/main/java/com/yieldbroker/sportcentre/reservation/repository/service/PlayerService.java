@@ -11,7 +11,13 @@ public class PlayerService {
 
   private final PlayerRepository playerRepository;
 
-  public Player createPlayer(Player player) {
+  public Player getPlayer(String playerName) {
+    return playerRepository.findByName(playerName);
+  }
+
+  public Player createPlayer(String playerName) {
+    Player player = new Player();
+    player.setName(playerName);
     return playerRepository.save(player);
   }
 }
