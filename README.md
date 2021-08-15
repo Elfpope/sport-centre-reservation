@@ -13,17 +13,15 @@ This is a coding test from Yieldbroker.
 - Port number 8888
 
 ### How To Build
-Use below maven command to generate the artifact sport-centre-reservation-1.0.0-SNAPSHOT.jar.
+Use the below maven command to generate the artifact.
 ```
   mvn clean install
 ```
 
 ### How To Run
-- ensure JDK 11 is used and port number 8888 is available
-- navigate to the folder (e.g. target) containing the above jar file
-- execute the jar with below command
+Use the below command to run the application.
 ```
-  java -jar sport-centre-reservation-1.0.0-SNAPSHOT.jar
+  java -jar target/sport-centre-reservation-1.0.0-SNAPSHOT.jar
 ```
 
 #### Implemented RESTful API
