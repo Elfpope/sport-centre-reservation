@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class NotificationListener implements EventListener{
+public class NotificationListener implements EventListener {
 
   private static final DateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
 
