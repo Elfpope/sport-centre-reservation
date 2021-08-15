@@ -9,18 +9,29 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Component;
 
-@Component
 @RequiredArgsConstructor
-public class NotificationListener {
+public class NotificationListener implements EventListener{
+
   private static final DateFormat dateFormat = new SimpleDateFormat(Constants.DATE_PATTERN);
 
   private final ReservationService reservationService;
 
-  public void update(Date reservationDate, TennisCourt tennisCourt) {
+  @Override
+  public void update(EventData eventData) {
+    Optional<Date> reservationDate = Optional.ofNullable((Date) eventData.getParameters().get(Constants.RESERVATION_DATE));
+    Date date = reservationDate.orElse(null);
+
+    Optional<TennisCourt> tennisCourt = Optional.ofNullable((TennisCourt) eventData.getParameters().get(Constants.TENNIS_COURT));
+    TennisCourt court = tennisCourt.orElse(null);
+
+    sendNotification(date, court);
+  }
+
+  private void sendNotification(Date reservationDate, TennisCourt tennisCourt) {
     if (reservationService.isFullyReserved(reservationDate, tennisCourt)) {
       List<Reservation> reservations = reservationService.getReservations(reservationDate, tennisCourt);
       sendFullyReservedNotification(
