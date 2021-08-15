@@ -20,9 +20,18 @@ public class ReservationService {
     return reservationRepository.findAll();
   }
 
+  public List<Reservation> getReservations(Date reservationDate, TennisCourt tennisCourt) {
+    return reservationRepository.findAllByDateAndCourt(reservationDate, tennisCourt.getId());
+  }
+
   public boolean isReservable(Date reservationDate, TennisCourt tennisCourt) {
-    List<Reservation> reservations = reservationRepository.findAllByDateAndCourt(reservationDate, tennisCourt.getId());
+    List<Reservation> reservations = getReservations(reservationDate, tennisCourt);
     return reservations.size() < Constants.MAX_PLAYER_NUMBER_PER_COURT;
+  }
+
+  public boolean isFullyReserved(Date reservationDate, TennisCourt tennisCourt) {
+    List<Reservation> reservations = getReservations(reservationDate, tennisCourt);
+    return reservations.size() == Constants.MAX_PLAYER_NUMBER_PER_COURT;
   }
 
   public Reservation createReservation(Date reservationDate, TennisCourt tennisCourt, Player player) {

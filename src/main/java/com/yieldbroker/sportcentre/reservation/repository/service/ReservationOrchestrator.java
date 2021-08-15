@@ -3,6 +3,7 @@ package com.yieldbroker.sportcentre.reservation.repository.service;
 import com.yieldbroker.sportcentre.reservation.entity.Player;
 import com.yieldbroker.sportcentre.reservation.entity.Reservation;
 import com.yieldbroker.sportcentre.reservation.entity.TennisCourt;
+import com.yieldbroker.sportcentre.reservation.event.NotificationListener;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Predicate;
@@ -19,6 +20,8 @@ public class ReservationOrchestrator {
 
   private final ReservationService reservationService;
 
+  private final NotificationListener notificationListener;
+
   public List<Reservation> getReservations() {
     return reservationService.getReservations();
   }
@@ -34,7 +37,10 @@ public class ReservationOrchestrator {
     }
 
     TennisCourt tennisCourt = getReservableTennisCourt(reservationDate);
-    return reservationService.createReservation(reservationDate, tennisCourt, player);
+    Reservation reservation = reservationService.createReservation(reservationDate, tennisCourt, player);
+
+    notificationListener.update(reservationDate, tennisCourt);
+    return reservation;
   }
 
   /**
