@@ -36,6 +36,9 @@ The following endpoints are implemented.
 | http://localhost:8888/reservations/create?date=21-09-2021&playerName=Hugo   |    POST       | create a reservation for Hugo on 21 Sep 2021	|
 
 
+## Architecture Diagram
+![Architecture Diagram](Sport_Centre_Architecture_Diagram.png)
+
 
 ## Authors
 
